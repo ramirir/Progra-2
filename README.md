@@ -1,28 +1,24 @@
-Nombre del proyecto: Lankedon
+Nueva funcionalidad incorporada
 
-Integrantes del grupo:
-Ramiro Zaldivar
-Facundo Miron
-Ignacio Derkacz
+Se incorporó un módulo de gestión de red de contactos, inspirado en el funcionamiento de una red profesional como LinkedIn. La mejora reemplaza el agregado directo de contactos por un sistema de solicitudes de contacto, donde un usuario envía una solicitud y el destinatario puede aceptarla o rechazarla antes de establecer la conexión.
 
-Alternativa elegida: ecosistema de Red Social Profesional
+Además, se añadió la funcionalidad de seguir usuarios, permitiendo crear relaciones unidireccionales sin necesidad de aceptación.
 
-Estructuras de datos utilizadas. 
-Diccionario: Implementado mediante una lista enlazada ordenada por clave para la identificación inmediata y almacenamiento de los perfiles de usuario.
-Pila : Utilizada en cada perfil de usuario para gestionar el historial de cambios, permitiendo deshacer la última actualización de la profesión
-Cola : Implementada para la gestión de postulaciones a ofertas de empleo, procesando las solicitudes estrictamente por orden de llegada .
-Grafo : Implementado mediante vértices y nodos adyacentes para modelar la red de contactos entre los profesionales.
-arbol binario: utilizado para representar y organizar correctamente la taxonomia de habilidades laborales.
 
-Funcionalidades implementadas en esta segunda etapa. 
-Registrar usuario, iniciar sesion, postularse a una Oferta de Empleo, deshacer última modificación,identificación de perfiles, 
-gestión de usuarios, panel de autogestión, historial de cambios, gestión de postulaciones, procesamiento de candidatos, 
-sugerencia de contactos conectar con alguien y ver recomendaciones
+Esta mejora hace que el comportamiento de la plataforma sea más realista y cercano al de una red profesional.
 
-Link del repositorio. 
-https://github.com/ramirir/Tp_progra2_Zaldivar_Miron_Derkacz
+Los principales beneficios son:
 
-Actividades realizadas por cada integrantes
-Ramiro Zaldivar:Grafo
-Facundo Miron:cola pila diccionario
-Ignacio Derkacz: Arbol binario
+-Permite que cada usuario decida si acepta o rechaza una solicitud de contacto.
+-Diferencia dos tipos de relaciones: CONTACTO (bidireccional) y SIGUE (unidireccional).
+-Mejora la experiencia del usuario mediante recomendaciones de contactos basadas en conexiones existentes.
+
+Para desarrollar esta funcionalidad se utilizaron los siguientes Tipos de Datos Abstractos:
+
+-Grafo implementado mediante listas de adyacencia: representa la red de usuarios y las relaciones existentes entre ellos.
+-Lista enlazada: utilizada para almacenar las relaciones de cada usuario (listas de adyacencia), las solicitudes de contacto pendientes y las listas de recomendaciones.
+-Diccionario: almacena todos los perfiles registrados y permite acceder rápidamente a un usuario mediante su correo electrónico.
+
+
+
+Cuando un usuario envía una solicitud de contacto, esta se guarda en la lista de solicitudes pendientes del destinatario. Si la solicitud es aceptada, el método conectar() agrega las aristas correspondientes al grafo, creando una relación bidireccional de tipo CONTACTO. En cambio, la funcionalidad seguir usuario agrega únicamente una relación de tipo SIGUE, representando una conexión unidireccional.
