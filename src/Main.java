@@ -19,9 +19,9 @@ public class Main {
 
         //Usuarios ya creados
 
-        Clase_Perfil user1 = new Clase_Perfil("juan@mail.com", "Juan Perez", "Desarrollador Java");
-        Clase_Perfil user2 = new Clase_Perfil("ana@mail.com", "Ana Gomez", "Analista de Sistemas");
-        Clase_Perfil user3 = new Clase_Perfil("lucas@mail.com", "Lucas Diaz", "Administrador Linux");
+        Clase_Perfil user1 = new Clase_Perfil("facu@mail.com", "Facundo Miron", "Desarrollador Java");
+        Clase_Perfil user2 = new Clase_Perfil("nacho@mail.com", "Nacho", "Analista de Sistemas");
+        Clase_Perfil user3 = new Clase_Perfil("rami@mail.com", "Ramiro", "Administrador Linux");
 
         plataforma.insertar(user1.getId(), user1);
         plataforma.insertar(user2.getId(), user2);
@@ -45,7 +45,7 @@ public class Main {
 
         do {
             System.out.println("\n-----------------------------------------------");
-            System.out.println("          PLATAFORMA LABORAL - MENÚ PRINCIPAL    ");
+            System.out.println("             MENÚ PRINCIPAL                        ");
             System.out.println("-------------------------------------------------");
             System.out.println("1- Altas");
             System.out.println("2- Bajas");
@@ -53,7 +53,8 @@ public class Main {
             System.out.println("4- Salir");
             System.out.println("-------------------------------------------------");
             System.out.print("Elija una opción del menú principal: ");
-            opcionPrincipal = leerEntero(teclado);;
+            opcionPrincipal = leerEntero(teclado);
+            ;
             teclado.nextLine();
 
             if (opcionPrincipal == 1) {
@@ -151,11 +152,10 @@ public class Main {
             System.out.println("    2- Modificar Carrera / Profesión");
             System.out.println("    3- Postularse a una Oferta de Empleo");
             System.out.println("    4- Deshacer última modificación del perfil (Pila)");
-            System.out.println("    5- Ver mis contactos");
-            System.out.println("    6- Ver contactos recomendados");
-            System.out.println("    7- Calcular grado separacion");
-            System.out.println("    8- Asociar habilidad");
-            System.out.println("    9- Cerrar Sesión");
+            System.out.println("    5- Gestionar red de contactos");
+            System.out.println("    6- Calcular grado separacion");
+            System.out.println("    7- Asociar habilidad");
+            System.out.println("    8- Cerrar Sesión");
             System.out.print("    Elija una opción de su cuenta: ");
             opcionUsuario = leerEntero(teclado);
             teclado.nextLine();
@@ -213,12 +213,10 @@ public class Main {
                 }
 
             } else if (opcionUsuario == 5) {
-                redContactos.mostrarContactos(usuario.getId());
+                menuRed(usuario, plataforma, redContactos, teclado);
             } else if (opcionUsuario == 6) {
-                mostrarContactosRecomendados(usuario,plataforma, redContactos, teclado);
-            } else if (opcionUsuario == 7) {
                 calcularGradoSeparacion(usuario, redContactos, teclado);
-            } else if (opcionUsuario == 8) {
+            } else if (opcionUsuario == 7) {
                 System.out.println("\nHABILIDADES DISPONIBLES:");
                 arbolHabilidades.mostrarPreOrden();
 
@@ -232,14 +230,17 @@ public class Main {
                 } else {
                     System.out.println("La habilidad no existe.");
                 }
-            } else if (opcionUsuario == 9) {
+            } else if (opcionUsuario == 8) {
 
-                System.out.println("  Cerrando sesion de" + usuario.getNombre() + "...");
+                System.out.println("  Cerrando sesion de " + usuario.getNombre() + "...");
             } else {
                 System.out.println("  Opcion Invalida");
             }
-        } while (opcionUsuario != 9); //  Cerrar Sesión
+        } while (opcionUsuario != 8); //  Cerrar Sesión
     }
+
+
+
     // -----------------------------------------
     //              Menu de bajas
     // -----------------------------------------
@@ -311,7 +312,7 @@ public class Main {
             if (seleccion == 1) colaElegida = colaJava;
             else if (seleccion == 2) colaElegida = colaSistemas;
             else if (seleccion == 3) colaElegida = colaLinux;
-             else {
+            else {
                 System.out.println("  Opción inválida. Volviendo al menú ");
                 return;
             }
@@ -373,7 +374,7 @@ public class Main {
     }
 
 
-    public static void mostrarContactosRecomendados(Clase_Perfil usuario,Diccionario plataforma,  GrafoLista redContactos, Scanner teclado) {
+    public static void mostrarContactosRecomendados(Clase_Perfil usuario, Diccionario plataforma, GrafoLista redContactos, Scanner teclado) {
 
         System.out.println("\n    [ CONTACTOS RECOMENDADOS ]");
 
@@ -412,15 +413,32 @@ public class Main {
                 String emailElegido =
                         sugerencias.get(opcion - 1);
 
-                redContactos.conectar(
-                        usuario.getId(),
-                        emailElegido
-                );
+                System.out.println("¿Qué desea hacer?");
+                System.out.println("1- Enviar solicitud de contacto");
+                System.out.println("2- Seguir usuario");
+                System.out.println("3- Cancelar");
 
-                System.out.println(
-                        "Contacto agregado correctamente."
-                );
+                int accion = teclado.nextInt();
+                teclado.nextLine();
 
+
+                if (accion == 1) {
+
+                    redContactos.enviarSolicitudContacto(
+                            usuario.getId(),
+                            emailElegido
+                    );
+
+                } else if (accion == 2) {
+
+                    redContactos.seguir(
+                            usuario.getId(),
+                            emailElegido
+                    );
+
+                } else {
+                    System.out.println("Operación cancelada.");
+                }
             } else {
                 System.out.println("Opción inválida.");
             }
@@ -480,6 +498,109 @@ public class Main {
         int numero = teclado.nextInt();
         return numero;
     }
-}
 
+
+    public static void menuRed(Clase_Perfil usuario, Diccionario plataforma, GrafoLista redContactos, Scanner teclado)
+    {
+        int opcionRed;
+
+        do {
+
+            System.out.println("\n--------------------------------");
+            System.out.println("       GESTIÓN DE RED");
+            System.out.println("--------------------------------");
+            System.out.println("1- Ver mis contactos");
+            System.out.println("2- Ver recomendaciones");
+            System.out.println("3- Gestionar solicitudes");
+            System.out.println("4- Seguir usuario");
+            System.out.println("5- Ver usuarios que sigo");
+            System.out.println("6- Volver");
+            System.out.println("--------------------------------");
+            System.out.print("Seleccione una opción: ");
+
+            opcionRed = leerEntero(teclado);
+            teclado.nextLine();
+
+
+            if (opcionRed == 1) {
+
+                redContactos.mostrarContactos(usuario.getId());
+
+
+            } else if (opcionRed == 2) {mostrarContactosRecomendados(usuario, plataforma, redContactos, teclado);
+
+
+
+            } else if (opcionRed == 3) {gestionarSolicitudes(usuario, redContactos, teclado);
+
+
+            } else if (opcionRed == 4) {
+
+                System.out.print("Ingrese email del usuario a seguir: ");
+                String emailDestino = teclado.nextLine();
+
+                redContactos.seguir(
+                        usuario.getId(),
+                        emailDestino
+                );
+
+
+            } else if (opcionRed == 5) {redContactos.mostrarSeguidos(usuario.getId());
+
+
+            } else if (opcionRed == 6) {
+
+                System.out.println("Volviendo al menú anterior...");
+
+
+            } else {
+
+                System.out.println("Opción inválida.");
+
+            }
+
+
+        } while (opcionRed != 6);
+
+    }
+
+    public static void gestionarSolicitudes(Clase_Perfil usuario, GrafoLista redContactos, Scanner teclado)
+    {
+
+        if(usuario.getSolicitudesPendientes().isEmpty()){
+
+            System.out.println("No tienes solicitudes pendientes.");
+            return;
+
+        }
+
+        usuario.mostrarSolicitudesPendientes();
+
+        System.out.print("Seleccione una solicitud: ");
+        int indice = leerEntero(teclado);
+        teclado.nextLine();
+
+
+        System.out.println("\n1- Aceptar");
+        System.out.println("2- Rechazar");
+        System.out.print("Seleccione: ");
+
+        int opcion = leerEntero(teclado);
+        teclado.nextLine();
+
+
+        if(opcion == 1){redContactos.aceptarSolicitud(usuario, indice - 1);
+
+
+        } else if(opcion == 2){redContactos.rechazarSolicitud(usuario, indice - 1);
+
+
+        } else {
+
+            System.out.println("Opción inválida.");
+
+        }
+
+    }
+}
 

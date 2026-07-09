@@ -1,6 +1,7 @@
 package Grafo;
 
 import arbol.Lista;
+import clases.Clase_Perfil;
 
 public interface IGrafoLista {
 
@@ -8,9 +9,19 @@ public interface IGrafoLista {
 
     int calcularGradoSeparacion(String origen, String destino);
 
-    void sugerirContactos(String email);
 
     Lista<String> obtenerSugerencias(String email);
 
     void mostrarContactos(String email);
+
+    void seguir(String emailOrigen, String emailDestino);
+
+    void mostrarSeguidos(String email);
+
+    void enviarSolicitudContacto(String emailOrigen, String emailDestino);
+
+    void aceptarSolicitud(Clase_Perfil usuarioReceptor, int indiceSolicitud);
+
+    void rechazarSolicitud(Clase_Perfil usuarioReceptor, int indiceSolicitud);
+
 }

@@ -10,9 +10,8 @@ public class Nodo_Cola {
     }
 
     public Postulacion getInfo() { return info; }
-    public void setInfo(Postulacion info) { this.info = info; }
 
-    // Corregido: Nodo_cola -> Nodo_Cola
+
     public Nodo_Cola getSiguiente() { return siguiente; }
     public void setSiguiente(Nodo_Cola siguiente){ this.siguiente = siguiente; }
 }

@@ -12,6 +12,7 @@ public class Diccionario implements Idiccionario {
 
     @Override
     public void insertar(String clave, Clase_Perfil valor) {
+
         Nodo_Diccionario nuevo = new Nodo_Diccionario(clave, valor);
 
         // Lista vacia o el nuevo va primero
@@ -77,6 +78,7 @@ public class Diccionario implements Idiccionario {
 
     @Override
     public Clase_Perfil recuperar(String clave) {
+
         Nodo_Diccionario actual = origen;
 
         while (actual != null) {

@@ -16,8 +16,6 @@ public interface IArbolHabilidades {
 
     void mostrarPreOrden();
 
-    void mostrarPostOrden();
-
     void mostrarPorNiveles();
 
     int contarNodos();

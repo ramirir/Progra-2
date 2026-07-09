@@ -4,6 +4,8 @@ public class ArbolHabilidades implements IArbolHabilidades {
 
     private NodoArbol raiz;
 
+
+
     public ArbolHabilidades() {
         this.raiz = null;
     }
@@ -15,7 +17,6 @@ public class ArbolHabilidades implements IArbolHabilidades {
             return;
         }
         raiz = new NodoArbol(habilidad);
-        System.out.println("Raíz creada: " + habilidad);
     }
     @Override
     public void agregarHabilidad(String nombrePadre, String nuevaHabilidad) {
@@ -33,7 +34,7 @@ public class ArbolHabilidades implements IArbolHabilidades {
 
         NodoArbol nuevo = new NodoArbol(nuevaHabilidad, padre);
         padre.hijos.add(nuevo);
-        System.out.println("Habilidad '" + nuevaHabilidad + "' agregada bajo '" + nombrePadre + "'.");
+
     }
 
     @Override
@@ -51,7 +52,6 @@ public class ArbolHabilidades implements IArbolHabilidades {
         }
 
         nodo.profesionales.add(idProfesional);
-        System.out.println("Profesional " + idProfesional + " asociado a '" + habilidad + "'.");
     }
     @Override
     public void desasociarProfesional(String habilidad, String idProfesional) {
@@ -153,24 +153,7 @@ public class ArbolHabilidades implements IArbolHabilidades {
             preOrdenRecursivo(nodo.hijos.get(i), nivel + 1);
         }
     }
-    @Override
-    public void mostrarPostOrden() {
-        System.out.print("PostOrden: ");
-        postOrdenRecursivo(raiz);
-        System.out.println();
-    }
 
-    private void postOrdenRecursivo(NodoArbol nodo) {
-        if (nodo == null) {
-            return;
-        }
-
-        for (int i = 0; i < nodo.hijos.size(); i++) {
-            postOrdenRecursivo(nodo.hijos.get(i));
-        }
-
-        System.out.print(nodo.habilidad + " ");
-    }
     @Override
     public void mostrarPorNiveles() {
         if (raiz == null) {
